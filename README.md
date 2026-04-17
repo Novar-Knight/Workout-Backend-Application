@@ -37,26 +37,19 @@ cd Workout-Backend-Application
 pipenv install
 pipenv shell
 ```
-3. Set Flask App
-
-```bash
-export FLASK_APP=server.app
-export FLASK_DEBUG=1
-```
-
-4. Run Migrations
+3. Run Migrations
 
 ```bash
 flask db init
 flask db migrate -m "init"
 flask db upgrade
 ```
-5. Seed Database
+4. Seed Database
 
 ```bash
 python -m server.seed
 ```
-6. Run Server
+5. Run Server
 
 ```bash
 python -m server.app
