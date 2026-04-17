@@ -1,10 +1,8 @@
 from flask import Flask, make_response, request, jsonify
 from flask_migrate import Migrate
 from marshmallow import  ValidationError
-from models import db, Workout, Exercise, WorkoutExercise
+from server.model import db, Workout, Exercise, WorkoutExercise
 from schemas import WorkoutSchema, ExerciseSchema, WorkoutExerciseSchema
-
-from models import *
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
