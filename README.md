@@ -156,8 +156,6 @@ curl http://127.0.0.1:5555/workouts
 ├── requirements.txt
 └── server
     ├── app.py
-    ├── instance
-    │   └── app.db
     ├── model.py
     ├── schemas.py
     └── seed.py
