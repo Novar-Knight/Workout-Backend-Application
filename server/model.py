@@ -10,12 +10,17 @@ db = SQLAlchemy()
 class WorkoutExercise(db.Model):
     __tablename__ = 'workout_exercises'
     
-    id = db.column(db.Integer, primary_key=True)
-    work_out_id = db.Column(db.Integer, db.ForeignKey('workouts.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'), nullable=False)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
     sets = db.Column(db.Integer,default=0)
     reps = db.Column(db.Integer,default=0)
     duration_seconds = db.Column(db.Integer, default=0)
+    
+    workout = db.relationship("Workout", back_populates="workout_exercises")
+    exercise = db.relationship("Exercise", back_populates="workout_exercises")
+    
+    
     
     _table_args__ = (
         CheckConstraint('reps >= 0'),
@@ -31,8 +36,8 @@ class Workout(db.Model):
     date = db.Column(db.Date, nullable=False)
     duration_minutes = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text) 
-    workout_exercises = relationship('WorkoutExercise', back_populates='workout', cascade='all, delete-orphan')
-    exercises = relationship('Exercise', secondary='workout_exercises', back_populates='workouts')
+    workout_exercises = db.relationship('WorkoutExercise', back_populates='workout', cascade='all, delete-orphan')
+    exercises = db.relationship('Exercise', secondary='workout_exercises', back_populates='workouts')
     
     __table_args__ = (CheckConstraint('duration_minutes > 0'),)
     
@@ -50,8 +55,8 @@ class Exercise(db.Model):
     name = db.Column(db.String(100), nullable=False, unique=True)
     category = db.Column(db.String(100), nullable=False)
     equipment_needed = db.Column(db.Boolean, default=False)
-    workout_exercises = relationship('WorkoutExercise', backref='exercise', cascade='all, delete-orphan')
-    workouts = relationship('Workout', secondary='workout_exercises', back_populates='exercises')
+    workout_exercises = db.relationship('WorkoutExercise', back_populates='exercise', cascade='all, delete-orphan')
+    workouts = db.relationship('Workout', secondary='workout_exercises', back_populates='exercises')
     
     @validates('name')
     def validate_name(self, key, value):

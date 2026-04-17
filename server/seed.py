@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from app import app
+from server.app import app
 from server.model import db, Workout, Exercise, WorkoutExercise
 from datetime import date
 
