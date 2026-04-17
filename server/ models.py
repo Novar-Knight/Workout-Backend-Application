@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates , relationship
-
+from sqlalchemy import CheckConstraint
 from datetime import date
 
 db = SQLAlchemy()
@@ -17,8 +17,13 @@ class WorkoutExercise(db.Model):
     reps = db.Column(db.Integer,default=0)
     duration_seconds = db.Column(db.Integer, default=0)
     
-    
-    
+    _table_args__ = (
+        CheckConstraint('reps >= 0'),
+        CheckConstraint('sets >= 0'),
+        CheckConstraint('duration_seconds >= 0'),
+    )
+   
+        
 class Workout(db.Model):
     __tablename__ = 'workouts'
     
@@ -28,6 +33,15 @@ class Workout(db.Model):
     notes = db.Column(db.Text) 
     workout_exercises = relationship('WorkoutExercise', back_populates='workout', cascade='all, delete-orphan')
     exercises = relationship('Exercise', secondary='workout_exercises', back_populates='workouts')
+    
+    __table_args__ = (CheckConstraint('duration_minutes > 0'),)
+    
+    @validates('duration_minutes')
+    def validate_duration(self, key, value):
+        if value <= 0:
+            raise ValueError('duration must be greater than 0')
+        return value
+    
     
 class Exercise(db.Model):
     __tablename__ = 'exercises'
@@ -39,6 +53,10 @@ class Exercise(db.Model):
     workout_exercises = relationship('WorkoutExercise', backref='exercise', cascade='all, delete-orphan')
     workouts = relationship('Workout', secondary='workout_exercises', back_populates='exercises')
     
-    
+    @validates('name')
+    def validate_name(self, key, value):
+        if not value or len(value.strip()) < 2:
+            raise ValueError('name must be at least 2 characters')
+        return value.strip()
     
     
