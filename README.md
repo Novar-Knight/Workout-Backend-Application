@@ -40,9 +40,10 @@ pipenv shell
 3. Run Migrations
 
 ```bash
-flask --app server.app:app db init
-flask --app server.app:app db migrate -m "initial migration"
-flask --app server.app:app db upgrade
+export FLASK_APP=server.app
+flask db init
+flask db migrate -m "initial migration"
+flask db upgrade
 ```
 4. Seed Database
 
@@ -141,6 +142,7 @@ curl http://127.0.0.1:5555/workouts
 
 ```bash
 .
+.
 ├── instance
 │   └── app.db
 ├── migrations
@@ -149,13 +151,15 @@ curl http://127.0.0.1:5555/workouts
 │   ├── README
 │   ├── script.py.mako
 │   └── versions
-│       └── e37e8a70c02a_rebuild_tables.py
+│       └── 175024d78462_initial_migration.py
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
 ├── requirements.txt
 └── server
     ├── app.py
+    ├── __init__.py
+    ├── instance
     ├── model.py
     ├── schemas.py
     └── seed.py
