@@ -40,9 +40,9 @@ pipenv shell
 3. Run Migrations
 
 ```bash
-flask db init
-flask db migrate -m "init"
-flask db upgrade
+flask --app server.app:app db init
+flask --app server.app:app db migrate -m "initial migration"
+flask --app server.app:app db upgrade
 ```
 4. Seed Database
 

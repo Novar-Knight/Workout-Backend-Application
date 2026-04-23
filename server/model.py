@@ -22,7 +22,7 @@ class WorkoutExercise(db.Model):
     
     
     
-    _table_args__ = (
+    __table_args__ = (
         CheckConstraint('reps >= 0'),
         CheckConstraint('sets >= 0'),
         CheckConstraint('duration_seconds >= 0'),
