@@ -1,29 +1,30 @@
 # Workout-Backend-Application
 
-# Project Title
-
-Workout-Backend-Application
-
-# Project Description
+## Project Description
 
 This is a Flask REST API for managing workouts and exercises.
 It allows users to create workouts, create exercises, and link exercises to workouts using a many-to-many relationship with additional data such as reps, sets, and duration
 
-# The system is built by ;
+## The system is built by ;
+
+```bash
 Flask
 Flask-SQLAlchemy
 Flask-Migrate
 Marshmallow for serialization/validation
+```
+## Tech Stack
 
-# Tech Stack
-Python 3.8+
+```bash
+Python 3.12
 Flask 2.2.2
 Flask-SQLAlchemy 3.0.3
 Flask-Migrate 3.1.0
 Marshmallow 3.20.1
 Pipenv
+```
 
-# Installation Instructions
+## Installation Instructions
 1. Clone repository
 
 ```bash
@@ -55,90 +56,68 @@ python -m server.seed
 ```bash
 python -m server.app
 ```
-
+6. Flask Shell
+```bash
+flask --app server.app shell
+```
 Server runs at:
 
 http://127.0.0.1:5555
 
-# API Endpoints
+## API Endpoints
 1. Workouts
 
-GET /workouts
+A.GET /workouts
 Returns all workouts
 
-GET /workouts/<id>
+B.GET /workouts/<id>
 Returns a single workout with exercises
 
-POST /workouts
+C.POST /workouts
 Creates a workout
 
-Example body:
 
-```bash
-{
-  "date": "2026-04-17",
-  "duration_minutes": 45,
-  "notes": "Morning workout"
-}
-```
-
-DELETE /workouts/<id>
+D.DELETE /workouts/<id>
 Deletes a workout
 
 2. Exercises
 
-GET /exercises
+A.GET /exercises
 Returns all exercises
 
-GET /exercises/<id>
+B.GET /exercises/<id>
 Returns a single exercise with workouts
 
-POST /exercises
+C.POST /exercises
 Creates an exercise
 
-Example body:
 
-```bash
-{
-  "name": "Push Up",
-  "category": "Strength",
-  "equipment_needed": false
-}
-```
-
-DELETE /exercises/<id>
+D.DELETE /exercises/<id>
 Deletes an exercise
 
 3. Workout Exercises (Join Table)
 
-POST /workouts/<workout_id>/exercises/<exercise_id>/workout_exercises
+A.POST /workouts/<workout_id>/exercises/<exercise_id>/workout_exercises
 Adds an exercise to a workout
 
-Example body:
 
-```bash
-{
-  "reps": 15,
-  "sets": 3,
-  "duration_seconds": 60
-}
-```
 
-# Testing
+## Testing
 
 You can test endpoints using:
 
+```bash
 Postman
 curl
 Flask shell
-
+```
 Example:
 
 ```bash
 curl http://127.0.0.1:5555/workouts
 ```
 
-# Project Structure
+## Project Structure
 
 ```bash
 .
